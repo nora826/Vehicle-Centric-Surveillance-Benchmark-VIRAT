@@ -1,27 +1,28 @@
 # Data Versions
 
 
-###### VIRAT RELEASE 2.0 (12)
+##### VIRAT RELEASE 2.0 (12)
 The file _preprocessing_2.0.py_ takes as input the _filepaths_2.0.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_2.0.json_ file. 
 
-###### DIVA IARPA - Extended release (46)
+##### DIVA IARPA - Extended release (46)
 The file _preprocessing_Extended.py_ takes as input the _filepaths_Extended.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_Extended.json_ file. 
 
 
 ### TRAJECTORIES V0
 This data has been extracted directly from DIVA IARPA (extended) and VIRAT 2.0 and put together in the same format. 
-V0 – EXTENDED
+##### V0 – EXTENDED
 Total of 7704 events
-https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/INITIAL%20VIRAT&DIVA%20DATA/trajectories_V0_2.0.json
+
 ![image](https://github.com/user-attachments/assets/26094798-7769-421b-860c-3304af47eb19)
-V0 – 2.0
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/INITIAL%20VIRAT&DIVA%20DATA/trajectories_V0_2.0.json
+##### V0 – 2.0
 Total of 1555 events
-https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/INITIAL%20VIRAT&DIVA%20DATA/trajectories_V0_Extended.json
+
 ![image](https://github.com/user-attachments/assets/a45a7998-b5c3-4c81-944b-c1cfc4930f00)
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/INITIAL%20VIRAT&DIVA%20DATA/trajectories_V0_Extended.json
 
 
 ### TRAJECTORIES V1
-https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V1.json 
 Filter out non relevant activities and keep only the ones that might be interesting
 
 • Activities that were kept:  "Person loading an Object to a Vehicle",  "Person getting into a Vehicle", "Person Unloading an Object from a Car/Vehicle", "Person getting out of a Vehicle", "Person entering a facility", "Person exiting a facility", "Person running", "Exiting", "Opening", "Closing", "activity_standing", "vehicle_stopping", "activity_walking", "vehicle_turning_right", "vehicle_moving", "activity_carrying", "vehicle_starting", "vehicle_turning_left", "activity_running", "Unloading",  "Loading", "Entering", "vehicle_u_turn"
@@ -38,8 +39,9 @@ Total of 4876 events
 
 ![image](https://github.com/user-attachments/assets/3ea35441-b1d5-4267-b505-65eefb7ebc86)
 
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V1.json 
+
 ### TRAJECTORIES V2
-https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V2.json
 In V1 there are 974 samples for “vehicle_moving” activity. 
 After analyzing the samples, I realized that it englobes many sub-activities within vehicle moving. 
 ![image](https://github.com/user-attachments/assets/24943990-0a36-40de-abae-376425527058)
@@ -49,6 +51,7 @@ The number of vehicle moving samples went down significantly, from 974 to 427.
 With the relabeling process new samples were added to the existing vehicle turn activities. And two new activity-types were created: forward and backwards.
 
 ![image](https://github.com/user-attachments/assets/e8ac3bc2-432b-46a8-8a0c-b1006533b458)
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V2.json
 
 ### TRAJECTORIES V3
 A subset of vehicle-related activities only was created, filtering out the rest of the activities: 
@@ -62,9 +65,12 @@ To have true negative samples for questions related to person entering or exitin
 ![image](https://github.com/user-attachments/assets/0f85cb1c-3af8-4280-99b5-056588e17194)
 
 
-V3 contains all activities: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V3.json 
-V3.2 contains only the relevant activities: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V32.json 
-V3.2_Extended contains V3.2 together with 150 person walking samples: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V32_extended.json
+##### V3 contains all activities: 
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V3.json 
+##### V3.2 contains only the relevant activities: 
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V32.json 
+##### V3.2_Extended contains V3.2 together with 150 person walking samples: 
+https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V32_extended.json
 
 
 ### TRAJECTORIES V4
