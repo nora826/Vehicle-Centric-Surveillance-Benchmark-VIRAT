@@ -2,10 +2,10 @@
 
 
 ##### VIRAT RELEASE 2.0 (12)
-The file _preprocessing_2.0.py_ takes as input the _filepaths_2.0.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate trajectories_V0_2.0.json file. 
+The file _preprocessing_2.0.py_ takes as input the _filepaths_2.0.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_2.0.json_ file. 
 
 ##### DIVA IARPA - Extended release (46)
-The file preprocessing_Extended.py takes as input the filepaths_Extended.txt (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate trajectories_V0_Extended.json file. 
+The file _preprocessing_Extended.py_ takes as input the _filepaths_Extended.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_Extended.json_ file. 
 
 
 ## DATA VERSIONS
@@ -41,7 +41,7 @@ In V1 there are 974 samples for “vehicle_moving” activity.
 After analyzing the samples, I realized that it englobes many sub-activities within vehicle moving. 
 ![image](https://github.com/user-attachments/assets/24943990-0a36-40de-abae-376425527058)
 
-Therefore, a manual relabeling process was done with these activities, visualizing each of the trajectories and assigning one of the 5 labels above (turning left, turning right, making u-turn, moving forward, moving backwards).
+Therefore, a manual relabeling process was done with these activities, visualizing each of the trajectories and assigning one of the 5 labels above (turning left, turning right, making u-turn, moving forward, moving backwards). Python file using streamlit for relabelling is called _manual_labelling.py_.
 The number of vehicle moving samples went down significantly, from 974 to 427. 
 With the relabeling process new samples were added to the existing vehicle turn activities. And two new activity-types were created: forward and backwards.
 
@@ -52,13 +52,14 @@ A subset of vehicle-related activities only was created, filtering out the rest 
 •	Activities that were kept: 
 "Person getting into a Vehicle”, "Person getting out of a Vehicle", "Exiting", "vehicle_turning_right”, "vehicle_moving_forward", "vehicle_turning_left", "vehicle_moving_backward", "Entering", "vehicle_u_turn"
 
-(Here entering and exiting refer to vehicles but also buildings, so it needs to be reviewed later in the manual cleaning process)
+(Here entering and exiting refer to vehicles but also buildings, so it needs to be reviewed later in the manual cleaning process: _data_cleaning.py_ )
 
 To have true negative samples for questions related to person entering or exiting the car, 150 “activity_walking” events were selected randomly, where the person is simply walking. 
 
 ![image](https://github.com/user-attachments/assets/0f85cb1c-3af8-4280-99b5-056588e17194)
 
 ### TRAJECTORIES V4
+Done using _generate_raw_dataset.py_ and introducing last dataset version JSON file as input.
 When generating the prompts these criteria were followed: 
 Each image is paired with at least one question, either a three-option multiple choice or a binary yes/no question. 
 
@@ -81,12 +82,11 @@ Taking such information into account, this is the method followed to generate re
 •	Person-action question. 150 randomly selected person walking trajectories are paired with Q3, where the correct answer is C) None of the above.
 
 This strategy guarantees that every question type includes true negative cases.
-Once the final set is created, with the correct questions per image, I went through a manual cleaning process, and in case a question was not adequate for a case, it was removed. 
+
+Once the final set is created, with the correct questions per image, I went through a manual cleaning process  _data_cleaning.py_ , and in case a question was not adequate for a case, it was removed. 
 The number of questions after the cleaning process decreased from 2220 to 1874 questions, so 346 prompts were removed.
 
-
 The removed prompts are in this file: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/excluded_cases_combined.tsv
-
 
 
 The final, cleaned version of the dataset with all the information to generate both  visual and textual prompt can be found in this file: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/trajectories_V4.tsv
