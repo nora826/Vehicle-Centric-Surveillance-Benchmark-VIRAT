@@ -1,10 +1,10 @@
 # TFG
 
 
-VIRAT RELEASE 2.0 (12)
-The file preprocessing_2.0.py takes as input the filepaths_2.0.txt (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate trajectories_V0_2.0.json file. 
+##### VIRAT RELEASE 2.0 (12)
+The file _preprocessing_2.0.py_ takes as input the _filepaths_2.0.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate trajectories_V0_2.0.json file. 
 
-DIVA IARPA - Extended release (46)
+##### DIVA IARPA - Extended release (46)
 The file preprocessing_Extended.py takes as input the filepaths_Extended.txt (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate trajectories_V0_Extended.json file. 
 
 
