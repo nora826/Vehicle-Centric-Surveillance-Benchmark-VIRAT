@@ -183,10 +183,6 @@ def process_event(key, ev, root):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python raw_extract_4frames.py <events.json>")
-        sys.exit(1)
-
     data = json.load(open(sys.argv[1]))
     root = Path("/home/norm/workspace/VIRATVehicleDataset/raw")
     root.mkdir(exist_ok=True, parents=True)
