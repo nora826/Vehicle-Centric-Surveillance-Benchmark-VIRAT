@@ -1,7 +1,7 @@
 ## Dataset Generation
 All the information on the dataset generation is explained in _DataVersions.md_ file. 
 
-## Customise dataset
+## Dataset Customization
 In order to dowload the dataset as desired: 
 
 streamlit run configurations_dataset.py
@@ -14,4 +14,4 @@ By running this command it will open a webapp where the desired configuration ca
 
 After choosing the desired configuration, by pressing "Generate Dataset With This Configuration", it will create a new directory where the customised dataset is stored.
 
-## Testing Models
+## Model Testing
