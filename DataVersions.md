@@ -4,8 +4,12 @@
 ##### VIRAT RELEASE 2.0 (12)
 The file _preprocessing_2.0.py_ takes as input the _filepaths_2.0.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_2.0.json_ file. 
 
+    python preprocessing_2.0.py filepaths_2.0.txt
+
 ##### DIVA IARPA - Extended release (46)
 The file _preprocessing_Extended.py_ takes as input the _filepaths_Extended.txt_ (that contains all the path to all annotations and videos of VIRAT 2.0 Dataset). This function will process all txt files and generate _trajectories_V0_Extended.json_ file. 
+
+     python preprocessing_Extended.py filepaths_Extended.txt
 
 
 ### TRAJECTORIES V0
@@ -48,6 +52,9 @@ After analyzing the samples, I realized that it englobes many sub-activities wit
 
 Therefore, a manual relabeling process was done with these activities, visualizing each of the trajectories and assigning one of the 5 labels above (turning left, turning right, making u-turn, moving forward, moving backwards). Python file using streamlit for relabelling is called _manual_labelling.py_.
 The number of vehicle moving samples went down significantly, from 974 to 427. 
+
+    streamlit run manual_labelling.py 
+    
 With the relabeling process new samples were added to the existing vehicle turn activities. And two new activity-types were created: forward and backwards.
 
 ![image](https://github.com/user-attachments/assets/e8ac3bc2-432b-46a8-8a0c-b1006533b458)
@@ -75,6 +82,9 @@ https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/D
 
 ### TRAJECTORIES V4
 Done using _generate_raw_dataset.py_ and introducing last dataset version JSON file as input.
+
+    python generate_raw_dataset.py trajectories_V32_extended.json
+    
 When generating the prompts these criteria were followed: 
 Each image is paired with at least one question, either a three-option multiple choice or a binary yes/no question. 
 
@@ -99,6 +109,9 @@ Taking such information into account, this is the method followed to generate re
 This strategy guarantees that every question type includes true negative cases.
 
 Once the final set is created, with the correct questions per image, I went through a manual cleaning process  _data_cleaning.py_ , and in case a question was not adequate for a case, it was removed. 
+
+    streamlit run cleaning.py
+    
 The number of questions after the cleaning process decreased from 2220 to 1874 questions, so 346 prompts were removed.
 
 The removed prompts are in this file: https://milestonesys365-my.sharepoint.com/personal/norm_milestone_dk/Documents/Desktop/NORA%20THESIS%20PROJECT/ALL%20DATA/DATASET%20VERSIONS/excluded_cases_combined.tsv
