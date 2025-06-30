@@ -22,8 +22,11 @@ The configurations_dataset.py file reads raw-dataset directory, that contains im
 To test the model with the desired configurations: 
 
     python internVL.py path/to/config/directory
+    
     python internVL.py path/to/config/directory
 
 To get the evaluation metrics (accuracy, F1-Score) and the cofussion matrices per question: 
+    
     python evaluation.py path/to/config/directory/internVL_results.tsv
+    
     python evaluation.py path/to/config/directory/qwen_2B_results.tsv
