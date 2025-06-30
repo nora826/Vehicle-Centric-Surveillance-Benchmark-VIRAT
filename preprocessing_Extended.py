@@ -79,25 +79,6 @@ def bbox_from_poly(poly):
     return lefttop_x, lefttop_y, width, height
 
 def interesting_activities(ids_regions, ids_activities, ids_types): 
-    """ activity_types_to_generate = [ 
-            "Exiting", 
-            "Entering"
-    ]
-     
-    activity_types_to_generate = [   #change this!!!
-        "vehicle_turning_left",
-        "vehicle_turning_right",
-        "Vehicle Making U-Turn",
-        "vehicle_moving", 
-        "vehicle_starting", 
-        "vehicle_stopping", 
-        "activity_walking",
-        "activity_running", 
-        "activity_standing" ]"""
-    
-    print("Activities we are interested in:")
-    #print(activity_types_to_generate)
-    print("all 46 events")
    
     regions_index = {}
     for region in ids_regions:

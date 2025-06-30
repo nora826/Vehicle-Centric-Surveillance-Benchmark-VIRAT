@@ -87,7 +87,7 @@ def draw_trajectory(img, centres, *, arrow=False):
     if not arrow:
         return
 
-    # draw arrow head
+
     dirs = []
     for p, q in reversed(list(zip(pts, pts[1:]))):
         dx, dy = q[0] - p[0], q[1] - p[1]
@@ -115,7 +115,6 @@ def draw_trajectory(img, centres, *, arrow=False):
     cv2.line(img, tip, R, (0, 0, 255), 3)
 
 
-# image generation
 
 def generate_image(fi, *, bbox, trajectory, arrow, traj_box, blur, crop, show_traj_box=True):
 
@@ -163,8 +162,8 @@ def generate_image(fi, *, bbox, trajectory, arrow, traj_box, blur, crop, show_tr
 
 
 
-base_path = Path("/home/norm/workspace/VIRATVehicleDataset/raw")
-data_path = base_path / "trajectories_V4.tsv"
+base_path = Path("/home/norm/workspace/TFG/Question-Dataset/raw-dataset")
+data_path = base_path / "data.tsv"
 img_root = base_path
 
 @st.cache_resource(show_spinner=False)
@@ -195,9 +194,8 @@ for q in all_questions:
 
 
 selected_questions = [q for q, checked in question_checks.items() if checked]
-df_filtered = df[df["question"].isin(selected_questions)].reset_index(drop=True) # keep only selected questions
+df_filtered = df[df["question"].isin(selected_questions)].reset_index(drop=True) 
 
-# if we are not including none of the above samples, remove that option from the question
 if not include_none:
     df_filtered = df_filtered[df_filtered["answer"] != "C"].reset_index(drop=True)
 
@@ -229,24 +227,21 @@ for key in ("show_blur", "show_crop", "show_trajbox"):
         st.session_state[key] = False
 
 
-# only one of these 3 can be true at the same time
+
 show_blur = st.sidebar.checkbox(
     "Blur non-relevant area",
     key="show_blur",
-    disabled=(st.session_state.show_crop or st.session_state.show_trajbox),
-)
+    disabled=(st.session_state.show_crop or st.session_state.show_trajbox),)
 
 show_crop = st.sidebar.checkbox(
     "Crop to trajectory bbox",
     key="show_crop",
-    disabled=(st.session_state.show_blur or st.session_state.show_trajbox),
-)
+    disabled=(st.session_state.show_blur or st.session_state.show_trajbox),)
 
 show_trajbox = st.sidebar.checkbox(
     "Trajectory enclosing bbox",
     key="show_trajbox",
-    disabled=(st.session_state.show_blur or st.session_state.show_crop),
-)
+    disabled=(st.session_state.show_blur or st.session_state.show_crop),)
 
 
 if st.session_state.show_blur and (st.session_state.show_crop or st.session_state.show_trajbox):
@@ -369,13 +364,12 @@ def export_dataset(filtered_df, config):
    
     base_dir = Path.cwd()
     k = 1
-    while (base_dir / f"configuration_{k}").exists():
+    while (base_dir / f"config_datasets/config{k}").exists():
         k += 1
-    out_dir   = base_dir / f"configuration_{k}"
-    train_dir = out_dir / "train"
-    test_dir  = out_dir / "test"
-    train_dir.mkdir(parents=True)
-    test_dir.mkdir()
+    out_dir   = base_dir / f"config_datasets/config{k}"
+    images_dir = out_dir / "images"
+    images_dir.mkdir(parents=True)
+
 
     tsv_rows = []
     prog = st.progress(0.0, text="Exporting dataset …")
@@ -413,8 +407,8 @@ def export_dataset(filtered_df, config):
             rel_name = clean_name(info["img_start"]["path"], suffix="_strip")
             frame_nums = row_dict["frame_numbers"][:3]
 
-        subset_dir = train_dir if "train/" in row_dict["img_start"] else test_dir
-        cv2.imwrite(str(subset_dir / rel_name), rendered)
+        cv2.imwrite(str(images_dir / rel_name), rendered)
+
 
         question_text = row_dict["question"]
         if not config["include_none"]:
@@ -427,7 +421,7 @@ def export_dataset(filtered_df, config):
         entry={
             "event_key":   row_dict["event_key"],
             "question":    final_question,
-            "img":         f"{subset_dir.name}/{rel_name}",
+            "img":         f"images/{rel_name}",
             "source":      row_dict["source"],
             "frame_number": frame_nums,
         }

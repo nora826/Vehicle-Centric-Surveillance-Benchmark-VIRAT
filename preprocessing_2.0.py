@@ -3,7 +3,6 @@ import csv
 import json
 from collections import defaultdict
 
-# Mapping dictionaries for event and object types
 EVENT_TYPE_MAP = {
     "1": "Person loading an Object to a Vehicle",
     "2": "Person Unloading an Object from a Car/Vehicle",
@@ -28,7 +27,7 @@ OBJECT_TYPE_MAP = {
 }
 
 def load_event_file(event_file_path):
-    """Reads the event file and returns a list of rows (as lists of strings)."""
+    """Read event file and returns a list of rows """
     events = []
     with open(event_file_path, "r") as f:
         for line in f:
@@ -41,8 +40,7 @@ def load_event_file(event_file_path):
 
 def load_object_file(object_file_path):
     """
-    Reads the object file and returns a dictionary mapping object_id to a list of rows.
-    Each row is stored as a dict.
+    Mapping object_id to a list of rows.
     """
     objects = defaultdict(list)
     with open(object_file_path, "r") as f:
@@ -65,7 +63,7 @@ def load_object_file(object_file_path):
 
 def load_mapping_file(mapping_file_path):
     """
-    Reads the mapping file and returns a list of rows (each a list of strings).
+    Mapping and return a list of rows
     """
     mappings = []
     with open(mapping_file_path, "r") as f:
@@ -79,7 +77,7 @@ def load_mapping_file(mapping_file_path):
 
 def build_ordered_object_ids(object_file_path):
     """
-    Returns an ordered list of unique object IDs as they first appear in the object file.
+    Return list of unique object IDs
     """
     ordered_ids = []
     with open(object_file_path, "r") as f:
@@ -120,24 +118,21 @@ def extract_bbox_data_for_object(object_rows, start_frame, end_frame):
 
 def generate_event_dicts(event_file_path, mapping_file_path, object_file_path, video_source):
     """
-    Processes the three files and returns a dictionary of event dictionaries.
-    The key is constructed as <base_id>_<activity_id>, where base_id is the portion
-    after "VIRAT_S_" in the video_source.
+    Process the 3 files and return a dictionary of event dictionaries.
+    Key <base_id>_<activity_id>
     """
     mapping_rows = load_mapping_file(mapping_file_path)
     objects_dict = load_object_file(object_file_path)
     ordered_obj_ids = build_ordered_object_ids(object_file_path)
     
     events_dict = {}
-    # Extract base id from video_source: e.g. from ".../VIRAT_S_000001" get "000001"
+  
     base_id = ""
     if "VIRAT_S_" in video_source:
         base_id = video_source.split("VIRAT_S_")[-1]
     
     for mapping in mapping_rows:
-        # Mapping file columns:
-        # 0: event_id, 1: event_type, 2: duration, 3: start_frame, 4: end_frame,
-        # 5: number_of_objects, 6 onward: association flags ("1" or "0")
+   
         event_id = mapping[0]
         event_type = mapping[1]
         start_frame = int(mapping[3])
@@ -145,14 +140,12 @@ def generate_event_dicts(event_file_path, mapping_file_path, object_file_path, v
         activity_label = EVENT_TYPE_MAP.get(str(event_type), "Unknown")
         
         trajectory = []
-        # Iterate over association flags (starting at column 6)
         for idx, flag in enumerate(mapping[6:]):
             if flag == "1":
                 if idx < len(ordered_obj_ids):
                     obj_id = ordered_obj_ids[idx]
                     obj_rows = objects_dict.get(obj_id, [])
                     bbox_per_frame = extract_bbox_data_for_object(obj_rows, start_frame, end_frame)
-                    # Use the first occurrence to determine actor type, if available
                     if obj_rows:
                         obj_type = OBJECT_TYPE_MAP.get(obj_rows[0]['object_type'], "Unknown")
                     else:
@@ -172,7 +165,6 @@ def generate_event_dicts(event_file_path, mapping_file_path, object_file_path, v
             'activity_id': event_id,
             'source': os.path.abspath(video_source)
         }
-        # Create dictionary key as "<base_id>_<activity_id>"
         key = f"{base_id}_{event_dict['activity_id']}"
         events_dict[key] = event_dict
     
@@ -181,8 +173,8 @@ def generate_event_dicts(event_file_path, mapping_file_path, object_file_path, v
 def process_annotation_list(list_file_path):
     """
     Reads a file containing a list of base annotation paths (one per line).
-    For each path, it appends the expected filename suffixes for events, mapping, and objects,
-    processes them, and combines the resulting event dictionaries into one dictionary.
+    For each path, append the expected filename for events, mapping, and objects.
+    Processes and combine  into one dictionary.
     The keys of the dictionary are constructed as <base_id>_<activity_id>.
     """
     combined_events = {}
@@ -192,37 +184,25 @@ def process_annotation_list(list_file_path):
             if not base_path:
                 continue
             
-            # Construct full file paths by appending suffixes
             event_file = base_path + ".viratdata.events.txt"
             mapping_file = base_path + ".viratdata.mapping.txt"
             object_file = base_path + ".viratdata.objects.txt"
             
-            # Check if all files exist; if not, skip this entry.
             if not (os.path.exists(event_file) and os.path.exists(mapping_file) and os.path.exists(object_file)):
                 print(f"Skipping {base_path} because one or more annotation files are missing.")
                 continue
             
-            # Here, we assume video_source is the same as the base_path.
             video_source = base_path
             
-            # Generate events for the current annotation set
             events = generate_event_dicts(event_file, mapping_file, object_file, video_source)
-            # Merge into the combined dictionary
+            
             combined_events.update(events)
     return combined_events
 
 
 if __name__ == "__main__":
-    # Path to the file that lists all base annotation paths
     list_file_path = "/home/norm/workspace/CameraAsWitness/dataset2/filepaths_2.0.txt"
-    
-    # Process the list and generate a combined list of event dictionaries
     combined_events = process_annotation_list(list_file_path)
-    
-    # Write the combined events to a JSON file or print them
     output_json = json.dumps(combined_events, indent=2)
-    #(output_json)
-    
-    # Optionally, save to a file:
     with open("trajectories_2.0.json", "w") as outfile:
         outfile.write(output_json)
